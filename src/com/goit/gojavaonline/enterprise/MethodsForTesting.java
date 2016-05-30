@@ -15,20 +15,3 @@ public interface MethodsForTesting {
 
     long listIteratorRemove(int numberOfMeasurements);
 }
-
-    /*List
-
-    add(index)
-    get(index)
-    remove(index)
-    contains(value)
-    populate (наполнение коллекции)
-    ListIterator.add()
-            ListIterator.remove()
-    Set
-
-    add(value)
-    remove(value)
-    contains(value)
-    populate (наполнение коллекции)
-} */

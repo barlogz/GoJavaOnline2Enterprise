@@ -4,48 +4,34 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class CollectionsForTesting implements MethodsForTesting {
+import org.apache.commons.collections4.MapUtils;
+
+public abstract class CollectionsForTesting {
 
     Collection<Integer> collection;
     int collectionSize;
 
+    public abstract long add(int numberOfMeasurements);
 
-    @Override
-    public long add(int numberOfMeasurements) {
-        return 0;
-    }
-
-    @Override
     public long get(int numberOfMeasurements) {
         return 0;
     }
 
-    @Override
-    public long remove(int numberOfMeasurements) {
-        return 0;
-    }
+    public abstract long remove(int numberOfMeasurements);
 
-    @Override
-    public long contains(int numberOfMeasurements) {
-        return 0;
-    }
+    public abstract long contains(int numberOfMeasurements);
 
-    @Override
-    public long populate(int startValue, int endValue, int numberOfMeasurements) {
-        return 0;
-    }
+    public abstract long populate(int startValue, int endValue, int numberOfMeasurements);
 
-    @Override
     public long listIteratorAdd(int numberOfMeasurements) {
         return 0;
     }
 
-    @Override
     public long listIteratorRemove(int numberOfMeasurements) {
         return 0;
     }
 
-    public void clear() {
+    private void clear() {
         this.collection.clear();
     }
 
@@ -67,5 +53,21 @@ public abstract class CollectionsForTesting implements MethodsForTesting {
 
         return results;
     }
+//    public String allMethodsMeasurementsResultsToTableString(int numberOfMeasurements) {
+//        Map<String, Long> allResults = this.allMethodsMeasurements(numberOfMeasurements);
+//        MapUtils.debugPrint(System.out, "myMap", allResults);
+//        return
+//    }
 
 }
+   /* public String allMethodsMeasurementsResultsToString(int numberOfMeasurements) {
+        Map<String, Long> allResults = this.allMethodsMeasurements(numberOfMeasurements);
+        String result = "Test results for " + this.collection.getClass().toString()
+                + " (" + "\"" +collectionSize/1000 + "K\" elements and "
+                + "\"" + numberOfMeasurements + "\" measurements)\n";
+        for (String key : allResults.keySet()) {
+            result += "Method " + key + ": " + allResults.get(key) + " ns\n";
+        }
+        return result;
+    }
+*/
