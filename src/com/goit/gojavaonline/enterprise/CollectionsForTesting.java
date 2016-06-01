@@ -4,8 +4,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.MapUtils;
-
 public abstract class CollectionsForTesting {
 
     Collection<Integer> collection;
@@ -39,6 +37,13 @@ public abstract class CollectionsForTesting {
         return (min + (int) (Math.random() * ((max - min) + 1)));
     }
 
+    public void populateCollection(Collection collection, int size) {
+        collection.clear();
+        for (int i = 0; i < size; i++) {
+            collection.add(i);
+        }
+    }
+
     public Map<String, Long> allMethodsMeasurements(int numberOfMeasurements) {
         Map<String, Long> results = new HashMap<>();
         results.put("add", this.add(numberOfMeasurements));
@@ -53,21 +58,15 @@ public abstract class CollectionsForTesting {
 
         return results;
     }
-//    public String allMethodsMeasurementsResultsToTableString(int numberOfMeasurements) {
-//        Map<String, Long> allResults = this.allMethodsMeasurements(numberOfMeasurements);
-//        MapUtils.debugPrint(System.out, "myMap", allResults);
-//        return
-//    }
 
-}
-   /* public String allMethodsMeasurementsResultsToString(int numberOfMeasurements) {
+    public String allMethodsMeasurementsResultsToString(int numberOfMeasurements) {
         Map<String, Long> allResults = this.allMethodsMeasurements(numberOfMeasurements);
         String result = "Test results for " + this.collection.getClass().toString()
-                + " (" + "\"" +collectionSize/1000 + "K\" elements and "
+                + " (" + "\"" + collectionSize / 1000 + "K\" elements and "
                 + "\"" + numberOfMeasurements + "\" measurements)\n";
         for (String key : allResults.keySet()) {
             result += "Method " + key + ": " + allResults.get(key) + " ns\n";
         }
         return result;
     }
-*/
+}

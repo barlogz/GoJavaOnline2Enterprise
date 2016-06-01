@@ -1,7 +1,8 @@
 package com.goit.gojavaonline.enterprise.Outputer;
+
 import static com.goit.gojavaonline.enterprise.Outputer.Cell.cellAlign.LEFT;
 
-public class Cell implements Cloneable{
+public class Cell implements Cloneable {
 
     private int width;
     private int height;

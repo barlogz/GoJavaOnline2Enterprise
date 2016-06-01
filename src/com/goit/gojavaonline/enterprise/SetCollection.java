@@ -11,6 +11,8 @@ public class SetCollection extends CollectionsForTesting {
 
     @Override
     public long add(int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
+
         final long startTime = System.nanoTime();
 
         for (int i = 0; i < numberOfMeasurements; i++) {
@@ -22,6 +24,7 @@ public class SetCollection extends CollectionsForTesting {
 
     @Override
     public long remove(int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
         final long startTime = System.nanoTime();
 
         for (int i = 0; i < numberOfMeasurements; i++) {

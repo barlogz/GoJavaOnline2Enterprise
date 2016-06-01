@@ -1,5 +1,6 @@
 package com.goit.gojavaonline.enterprise;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -11,7 +12,8 @@ public class ListCollection extends CollectionsForTesting {
     }
 
     @Override
-    public long add(int numberOfMeasurements) {
+    public long add(Collection collection, int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
         final long startTime = System.nanoTime();
 
         for (int i = 0; i < numberOfMeasurements; i++) {
@@ -24,6 +26,7 @@ public class ListCollection extends CollectionsForTesting {
 
     @Override
     public long get(int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
         final long startTime = System.nanoTime();
 
         for (int i = 0; i < numberOfMeasurements; i++) {
@@ -36,6 +39,7 @@ public class ListCollection extends CollectionsForTesting {
 
     @Override
     public long remove(int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
         final long startTime = System.nanoTime();
 
         for (int i = 0; i < numberOfMeasurements; i++) {
@@ -73,7 +77,8 @@ public class ListCollection extends CollectionsForTesting {
     }
 
     @Override
-    public long listIteratorAdd(int numberOfMeasurements) {
+    public long listIteratorAdd(List list, int numberOfMeasurements) {
+        populateCollection(list, numberOfMeasurements);
         ListIterator<Integer> listIterator = ((List<Integer>) collection).listIterator();
         final long startTime = System.nanoTime();
 
@@ -85,7 +90,8 @@ public class ListCollection extends CollectionsForTesting {
     }
 
     @Override
-    public long listIteratorRemove(int numberOfMeasurements) {
+    public long listIteratorRemove(List list, int numberOfMeasurements) {
+        populateCollection(list, numberOfMeasurements);
         ListIterator<Integer> listIterator = ((List<Integer>) collection).listIterator();
         final long startTime = System.nanoTime();
 

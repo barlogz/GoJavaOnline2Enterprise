@@ -4,6 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.goit.gojavaonline.enterprise.Outputer.ChartAlign.*;
+import static com.goit.gojavaonline.enterprise.Outputer.BordersType.*;
 
 
 public class Chart {
@@ -11,7 +12,7 @@ public class Chart {
     private List<ArrayList<Cell>> chart = new ArrayList<>();
 
     boolean allWidthAsBiggest = false;
-    private char columnSeparator = ' ';
+    private String columnSeparator = " ";
     private ChartAlign chartAlign = LEFT;
 
     public void setAlign(ChartAlign chartAlign) {
@@ -70,24 +71,81 @@ public class Chart {
         }
     }
 
-    public void setColumnSeparator(char separator) {
+    public void setColumnSeparator(String separator) {
         this.columnSeparator = separator;
     }
 
-    public void toConsole() {
+    public void toConsole(BordersType bordersType) {
+
+        if (bordersType == WITHOUT_HEADER) columnSeparator = "|";
 
         for (int i = 0; i < chart.size(); i++) {
-            for (int j = 0; j < chart.get(i).size(); j++) {
-                System.out.print(columnSeparator);
-                arrangeColumn(j);
-                System.out.print(chart.get(i).get(j));
-            }
-            System.out.print(columnSeparator + "\n");
+            if (bordersType == WITHOUT_HEADER)
+                System.out.println(makeHorizontalBorder(chart.get(i), i));
+
+            System.out.println(makeRow(chart.get(i)));
         }
+
+        if (bordersType == WITHOUT_HEADER || bordersType == WITH_HEADER)
+            System.out.println(makeHorizontalBorder(chart.get(0), -1));
     }
 
-    public void toFile(String path) {
+    public void writeToFile(WriteToFile file, BordersType bordersType) {
 
+        if (bordersType == WITHOUT_HEADER) columnSeparator = "|";
+
+        for (int i = 0; i < chart.size(); i++) {
+            if (bordersType == WITHOUT_HEADER)
+                file.writeToLine(makeHorizontalBorder(chart.get(i), i));
+            file.writeToLine(makeRow(chart.get(i)));
+        }
+        file.writeToLine(makeHorizontalBorder(chart.get(0), -1));
+    }
+
+    private String makeHorizontalBorder(ArrayList<Cell> row, int rowIndex) {
+        String border = "";
+
+        if (rowIndex == 0) border += "┌";
+        else if (rowIndex == -1) border += "└";
+        else border += "├";
+
+        for (int i = 0; i < row.size(); i++) {
+            arrangeColumn(i);
+            for (int j = 0; j < row.get(i).getValue().length(); j++) {
+                border += "-";
+            }
+            if (rowIndex == 0) {
+                if (i == row.size() - 1) {
+                    border += "┐";
+                } else {
+                    border += "┬";
+                }
+            } else if (rowIndex == -1) {
+                if (i == row.size() - 1) {
+                    border += "┘";
+                } else {
+                    border += "┴";
+                }
+            } else {
+                if (i == row.size() - 1) {
+                    border += "┤";
+                } else {
+                    border += "┼";
+                }
+            }
+        }
+        return border;
+    }
+
+    private String makeRow(ArrayList<Cell> row) {
+        String result = "";
+        for (int i = 0; i < row.size(); i++) {
+            arrangeColumn(i);
+            result += columnSeparator;
+            result += row.get(i).getValue();
+        }
+        result += columnSeparator;
+        return result;
     }
 
     private void arrangeColumn(int columnNumber) {

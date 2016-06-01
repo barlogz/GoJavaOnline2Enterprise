@@ -1,5 +1,6 @@
 package com.goit.gojavaonline.enterprise;
 
+import com.goit.gojavaonline.enterprise.Outputer.BordersType;
 import com.goit.gojavaonline.enterprise.Outputer.Chart;
 
 import java.util.*;
@@ -23,7 +24,7 @@ public class Main {
             add("listIteratorAdd");
             add("listIteratorRemove");
         }});
-        chart.setColumnSeparator('|');
+        chart.setColumnSeparator("|");
         chart.setAlign(LEFT);
         chart.addColumn(0, "Collection");
 
@@ -47,78 +48,8 @@ public class Main {
         chart.addRow(testResults);
         chart.setCell(4, 0, "TreeSet(" + numberOfElements + ")");
 
-        chart.toConsole();
-        System.out.println();
-        chart.toFile("");
+        chart.toConsole(BordersType.WITHOUT_HEADER);
 
-
-
-
-
-
-
-
-//        ListCollection arrayList = new ListCollection(numberOfElements, new ArrayList<>());
-//        System.out.println(arrayList.allMethodsMeasurementsResultsToTableString(numberOfMeasurements));
-//
-//        ListCollection arrayList = new ListCollection(numberOfElements, new ArrayList<>());
-//        System.out.println(arrayList.allMethodsMeasurementsResultsToString(numberOfMeasurements));
-//
-//        ListCollection linkedList = new ListCollection(numberOfElements, new LinkedList<>());
-//        System.out.println(linkedList.allMethodsMeasurementsResultsToString(numberOfMeasurements));
-//
-//        SetCollection hashSet = new SetCollection(numberOfElements, new HashSet<>());
-//        System.out.println(hashSet.allMethodsMeasurementsResultsToString(numberOfMeasurements));
-//
-//        SetCollection treeSet = new SetCollection(numberOfElements, new TreeSet<>());
-//        System.out.println(treeSet.allMethodsMeasurementsResultsToString(numberOfMeasurements));
-
-
-
-//        MapUtils.debugPrint(System.out, "myMap",arrayList.allMethodsMeasurements(numberOfMeasurements));
-//        MapUtils.verbosePrint(System.out, "myMap",arrayList.allMethodsMeasurements(numberOfMeasurements));
     }
 
 }
-
-
-
-    /*     Написать программу для сравнения эффективности коллекций:
-
-            Программа должна сравнивать различные имплементации коллекций по эффективности выполнения следующих операций:
-
-            List
-
-            add(index)
-            get(index)
-            remove(index)
-            contains(value)
-            populate (наполнение коллекции)
-            ListIterator.add()
-            ListIterator.remove()
-            Set
-
-            add(value)
-            remove(value)
-            contains(value)
-            populate (наполнение коллекции)
-
-
-            Сравнения должны выполнятся на объемах: 10К (10 000) 100К 1000К элементов.
-
-            Для каждого набора (10К, 100К, 1000К) выполнить не менее 100 измерений и вычислить среднее значение.
-
-            Результаты измерений вывести на экран и сохранить в файл в виде таблицы:
-
-            add
-            get
-            remove
-            contains
-            populate
-            iterator.add
-            iterator.remove
-            ArrayList
-            LinkedList
-            HashSet
-            TreeSet
-    */
