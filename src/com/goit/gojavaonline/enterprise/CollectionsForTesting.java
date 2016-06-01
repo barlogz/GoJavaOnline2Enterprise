@@ -1,31 +1,54 @@
 package com.goit.gojavaonline.enterprise;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public abstract class CollectionsForTesting {
 
     Collection<Integer> collection;
     int collectionSize;
+    public static final int count = 100;
 
-    public abstract long add(int numberOfMeasurements);
 
-    public long get(int numberOfMeasurements) {
+    public abstract long add(Collection collection, int numberOfMeasurements);
+
+    public long get(List list, int numberOfMeasurements) {
         return 0;
     }
 
-    public abstract long remove(int numberOfMeasurements);
+    public abstract long remove(Collection collection, int numberOfMeasurements);
 
-    public abstract long contains(int numberOfMeasurements);
+    public long contains(Collection collection, int numberOfMeasurements) {
+        populateCollection(collection, numberOfMeasurements);
+        final long startTime = System.nanoTime();
 
-    public abstract long populate(int startValue, int endValue, int numberOfMeasurements);
+        for (int i = 0; i < count; i++) {
+            collection.contains(randomIntGenerator(0, numberOfMeasurements));
+        }
+        return (System.nanoTime() - startTime) / count;
+    }
 
-    public long listIteratorAdd(int numberOfMeasurements) {
+    public long populate(Collection collection, int numberOfMeasurements){
+        long sum = 0;
+
+        for (int i = 0; i < numberOfMeasurements; i++) {
+            collection.clear();
+            final long startTime = System.nanoTime();
+            for (int j = 0; j < numberOfMeasurements; j++) {
+                collection.add(randomIntGenerator(0, numberOfMeasurements));
+            }
+            final long finishTime = System.nanoTime();
+            sum += finishTime - startTime;
+
+        }
+        return sum / numberOfMeasurements;
+    }
+
+    public long listIteratorAdd(List list, int numberOfMeasurements) {
         return 0;
     }
 
-    public long listIteratorRemove(int numberOfMeasurements) {
+    public long listIteratorRemove(List list, int numberOfMeasurements) {
         return 0;
     }
 
@@ -44,7 +67,7 @@ public abstract class CollectionsForTesting {
         }
     }
 
-    public Map<String, Long> allMethodsMeasurements(int numberOfMeasurements) {
+   /* public Map<String, Long> allMethodsMeasurements(int numberOfMeasurements) {
         Map<String, Long> results = new HashMap<>();
         results.put("add", this.add(numberOfMeasurements));
         results.put("get", this.get(numberOfMeasurements));
@@ -69,4 +92,5 @@ public abstract class CollectionsForTesting {
         }
         return result;
     }
+    */
 }

@@ -10,24 +10,26 @@ import java.io.IOException;
 import java.util.*;
 
 public class Measurer {
+    public Measurer (){
+    }
     private List<String> resultForArrayList = new ArrayList<>();
     private List<String> resultForLinkedList = new ArrayList<>();
     private List<String> resultForHashSet = new ArrayList<>();
     private List<String> resultForTreeSet = new ArrayList<>();
     private StringBuilder stringBuilder = new StringBuilder();
     private StringBuilder stringBuilderForFile = new StringBuilder();
-    ListCollection listCollection = new ListCollection(int collectionSize, List<Integer> list);
-    SetCollection setCollection;
+    ListCollection listCollection = new ListCollection();
+    SetCollection setCollection = new SetCollection();
 
     private void saveListResults(List list, List resultList, int numberOfMeasurements){
         resultList.add(0, list.getClass().getSimpleName());
-        resultList.add(1, String.valueOf(listCollection.add(numberOfMeasurements)));
-        resultList.add(2, String.valueOf(listCollection.get(numberOfMeasurements)));
-        resultList.add(3, String.valueOf(listCollection.remove(numberOfMeasurements)));
-        resultList.add(4, String.valueOf(listCollection.contains(numberOfMeasurements)));
-        resultList.add(5, String.valueOf(listCollection.populate(0, Integer.MAX_VALUE, numberOfMeasurements)));
-        resultList.add(6, String.valueOf(listCollection.listIteratorAdd(numberOfMeasurements)));
-        resultList.add(7, String.valueOf(listCollection.listIteratorRemove(numberOfMeasurements)));
+        resultList.add(1, String.valueOf(listCollection.add(list, numberOfMeasurements)));
+        resultList.add(2, String.valueOf(listCollection.get(list, numberOfMeasurements)));
+        resultList.add(3, String.valueOf(listCollection.remove(list, numberOfMeasurements)));
+        resultList.add(4, String.valueOf(listCollection.contains(list, numberOfMeasurements)));
+        resultList.add(5, String.valueOf(listCollection.populate(list, numberOfMeasurements)));
+        resultList.add(6, String.valueOf(listCollection.listIteratorAdd(list, numberOfMeasurements)));
+        resultList.add(7, String.valueOf(listCollection.listIteratorRemove(list, numberOfMeasurements)));
     }
 
     public void getListResults(List list, int numberOfMeasurements) {
@@ -41,11 +43,11 @@ public class Measurer {
 
     private void saveSetResults(Set set, List resultSet, int numberOfMeasurements) {
         resultSet.add(0, set.getClass().getSimpleName());
-        resultSet.add(1, String.valueOf(setCollection.add(numberOfMeasurements)));
+        resultSet.add(1, String.valueOf(setCollection.add(set, numberOfMeasurements)));
         resultSet.add(2, "-");
-        resultSet.add(3, String.valueOf(setCollection.remove(numberOfMeasurements)));
-        resultSet.add(4, String.valueOf(setCollection.contains(numberOfMeasurements)));
-        resultSet.add(5, String.valueOf(setCollection.populate(0, Integer.MAX_VALUE, numberOfMeasurements)));
+        resultSet.add(3, String.valueOf(setCollection.remove(set, numberOfMeasurements)));
+        resultSet.add(4, String.valueOf(setCollection.contains(set, numberOfMeasurements)));
+        resultSet.add(5, String.valueOf(setCollection.populate(set, numberOfMeasurements)));
         resultSet.add(6, "-");
         resultSet.add(7, "-");
     }
@@ -68,7 +70,7 @@ public class Measurer {
     public void printResults(String strSize, int numberOfMeasurements) {
         measure(numberOfMeasurements);
         stringBuilder.append(String.format("%52s%n", "--------------------------------------------------------------------------------------------------------------------------"));
-        stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", strSize, "add", "get", "remove", "contains", "populate", "listIteratorAdd", "listIteratorRemove"));
+        stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", "\"" + numberOfMeasurements/1000 + "K\" elem`s ", "add", "get", "remove", "contains", "populate", "listIteratorAdd", "listIteratorRemove"));
         stringBuilder.append(String.format("%52s%n", "--------------------------------------------------------------------------------------------------------------------------"));
         stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", resultForArrayList.get(0), resultForArrayList.get(1), resultForArrayList.get(2), resultForArrayList.get(3),
                 resultForArrayList.get(4), resultForArrayList.get(5), resultForArrayList.get(6), resultForArrayList.get(7)));
