@@ -1,7 +1,4 @@
-package com.goit.gojavaonline.enterprise.Outputer;
-
-import com.goit.gojavaonline.enterprise.ListCollection;
-import com.goit.gojavaonline.enterprise.SetCollection;
+package com.goit.gojavaonline.enterprise;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,67 +7,64 @@ import java.io.IOException;
 import java.util.*;
 
 public class Measurer {
-    public Measurer (){
-    }
     private List<String> resultForArrayList = new ArrayList<>();
     private List<String> resultForLinkedList = new ArrayList<>();
     private List<String> resultForHashSet = new ArrayList<>();
     private List<String> resultForTreeSet = new ArrayList<>();
     private StringBuilder stringBuilder = new StringBuilder();
     private StringBuilder stringBuilderForFile = new StringBuilder();
-    ListCollection listCollection = new ListCollection();
-    SetCollection setCollection = new SetCollection();
+    private ListCollection listCollection = new ListCollection();
+    private SetCollection setCollection = new SetCollection();
 
-    private void saveListResults(List list, List resultList, int numberOfMeasurements){
+    private void saveListResults(List<Object> list, List<String> resultList, int numberOfElements) {
         resultList.add(0, list.getClass().getSimpleName());
-        resultList.add(1, String.valueOf(listCollection.add(list, numberOfMeasurements)));
-        resultList.add(2, String.valueOf(listCollection.get(list, numberOfMeasurements)));
-        resultList.add(3, String.valueOf(listCollection.remove(list, numberOfMeasurements)));
-        resultList.add(4, String.valueOf(listCollection.contains(list, numberOfMeasurements)));
-        resultList.add(5, String.valueOf(listCollection.populate(list, numberOfMeasurements)));
-        resultList.add(6, String.valueOf(listCollection.listIteratorAdd(list, numberOfMeasurements)));
-        resultList.add(7, String.valueOf(listCollection.listIteratorRemove(list, numberOfMeasurements)));
+        resultList.add(1, String.valueOf(listCollection.add(list, numberOfElements)));
+        resultList.add(2, String.valueOf(listCollection.get(list, numberOfElements)));
+        resultList.add(3, String.valueOf(listCollection.remove(list, numberOfElements)));
+        resultList.add(4, String.valueOf(listCollection.contains(list, numberOfElements)));
+        resultList.add(5, String.valueOf(listCollection.populate(list, numberOfElements)));
+        resultList.add(6, String.valueOf(listCollection.listIteratorAdd(list, numberOfElements)));
+        resultList.add(7, String.valueOf(listCollection.listIteratorRemove(list, numberOfElements)));
     }
 
-    public void getListResults(List list, int numberOfMeasurements) {
-        if(list instanceof java.util.ArrayList) {
-            saveListResults(list, resultForArrayList, numberOfMeasurements);
-        }
-        else if (list instanceof java.util.LinkedList) {
-            saveListResults(list, resultForLinkedList, numberOfMeasurements);
+    private void getListResults(List<Object> list, int numberOfElements) {
+        if (list instanceof java.util.ArrayList) {
+            saveListResults(list, resultForArrayList, numberOfElements);
+        } else if (list instanceof java.util.LinkedList) {
+            saveListResults(list, resultForLinkedList, numberOfElements);
         }
     }
 
-    private void saveSetResults(Set set, List resultSet, int numberOfMeasurements) {
+    private void saveSetResults(Set set, List<String> resultSet, int numberOfElements) {
         resultSet.add(0, set.getClass().getSimpleName());
-        resultSet.add(1, String.valueOf(setCollection.add(set, numberOfMeasurements)));
+        resultSet.add(1, String.valueOf(setCollection.add(set, numberOfElements)));
         resultSet.add(2, "-");
-        resultSet.add(3, String.valueOf(setCollection.remove(set, numberOfMeasurements)));
-        resultSet.add(4, String.valueOf(setCollection.contains(set, numberOfMeasurements)));
-        resultSet.add(5, String.valueOf(setCollection.populate(set, numberOfMeasurements)));
+        resultSet.add(3, String.valueOf(setCollection.remove(set, numberOfElements)));
+        resultSet.add(4, String.valueOf(setCollection.contains(set, numberOfElements)));
+        resultSet.add(5, String.valueOf(setCollection.populate(set, numberOfElements)));
         resultSet.add(6, "-");
         resultSet.add(7, "-");
     }
 
-    public void getSetResults(Set set, int numberOfMeasurements) {
-        if(set instanceof java.util.HashSet) {
-            saveSetResults(set, resultForHashSet, numberOfMeasurements);
-        }
-        else if (set instanceof java.util.TreeSet) {
-            saveSetResults(set, resultForTreeSet, numberOfMeasurements);
+    private void getSetResults(Set set, int numberOfElements) {
+        if (set instanceof java.util.HashSet) {
+            saveSetResults(set, resultForHashSet, numberOfElements);
+        } else if (set instanceof java.util.TreeSet) {
+            saveSetResults(set, resultForTreeSet, numberOfElements);
         }
     }
 
-    public void measure(int numberOfMeasurements) {
-        getListResults(new ArrayList<>(), numberOfMeasurements);
-        getListResults(new LinkedList<>(), numberOfMeasurements);
-        getSetResults(new HashSet<>(), numberOfMeasurements);
-        getSetResults(new TreeSet<>(), numberOfMeasurements);
+    private void measure(int numberOfElements) {
+        getListResults(new ArrayList<>(), numberOfElements);
+        getListResults(new LinkedList<>(), numberOfElements);
+        getSetResults(new HashSet<>(), numberOfElements);
+        getSetResults(new TreeSet<>(), numberOfElements);
     }
+
     public void printResults(String strSize, int numberOfMeasurements) {
         measure(numberOfMeasurements);
         stringBuilder.append(String.format("%52s%n", "--------------------------------------------------------------------------------------------------------------------------"));
-        stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", "\"" + numberOfMeasurements/1000 + "K\" elem`s ", "add", "get", "remove", "contains", "populate", "listIteratorAdd", "listIteratorRemove"));
+        stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", strSize, "add", "get", "remove", "contains", "populate", "listIteratorAdd", "listIteratorRemove"));
         stringBuilder.append(String.format("%52s%n", "--------------------------------------------------------------------------------------------------------------------------"));
         stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", resultForArrayList.get(0), resultForArrayList.get(1), resultForArrayList.get(2), resultForArrayList.get(3),
                 resultForArrayList.get(4), resultForArrayList.get(5), resultForArrayList.get(6), resultForArrayList.get(7)));
@@ -81,15 +75,15 @@ public class Measurer {
         stringBuilder.append(String.format("%-12s%10s%10s%15s%15s%15s%22s%23s%n", resultForTreeSet.get(0), resultForTreeSet.get(1), resultForTreeSet.get(2), resultForTreeSet.get(3),
                 resultForTreeSet.get(4), resultForTreeSet.get(5), resultForTreeSet.get(6), resultForTreeSet.get(7)));
         stringBuilder.append(String.format("%52s%n", "--------------------------------------------------------------------------------------------------------------------------"));
-        stringBuilder.append(String.format("\n"));
-        stringBuilder.append(String.format("\n"));
-        stringBuilder.append(String.format("\n"));
+        stringBuilder.append("\n");
+        stringBuilder.append("\n");
+        stringBuilder.append("\n");
         System.out.println(stringBuilder.toString());
         stringBuilderForFile.append(stringBuilder);
         stringBuilder.setLength(0);
     }
 
-    public void writeToFile(String fileName){
+    public void writeToFile(String fileName) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(new File(fileName)))) {
             bufferedWriter.write(stringBuilderForFile.toString());
         } catch (IOException e) {
