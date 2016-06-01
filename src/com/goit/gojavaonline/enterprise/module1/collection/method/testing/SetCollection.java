@@ -1,4 +1,4 @@
-package com.goit.gojavaonline.enterprise;
+package com.goit.gojavaonline.enterprise.module1.collection.method.testing;
 
 import java.util.Collection;
 
