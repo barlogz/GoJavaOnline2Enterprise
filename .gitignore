@@ -3,3 +3,4 @@ out/
 *.iml
 *.iws
 *.xml
+*src/com.Temp.Outputer*
