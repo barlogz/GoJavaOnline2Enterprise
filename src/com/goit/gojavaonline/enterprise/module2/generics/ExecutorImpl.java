@@ -55,11 +55,33 @@ public class ExecutorImpl<T> implements Executor<T> {
 
     @Override
     public List<T> getValidResults() {
+        try {
+            if (isExcecuteActivated) {
+                return validResults;
+            } else {
+                throw new Exception("[ERROR]: Method execute() does not activate yet!");
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
         return null;
     }
 
     @Override
     public List<T> getInvalidResults() {
+        try {
+            if (isExcecuteActivated) {
+                return invalidResults;
+            } else {
+                throw new Exception("[ERROR]: Method execute() does not activated yet!");
+            }
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
         return null;
+    }
+
+    public List<Task<? extends T>> getTasks() {
+        return tasks;
     }
 }
