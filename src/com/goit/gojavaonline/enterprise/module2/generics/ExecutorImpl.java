@@ -8,12 +8,12 @@ public class ExecutorImpl<T> implements Executor<T> {
     private List<T> validResults = new ArrayList<>();
     private List<T> invalidResults = new ArrayList<>();
 
-    boolean isExcecuteActivated;
+    private boolean isExecuteActivated;
 
     @Override
     public void addTask(Task<? extends T> task) {
         try {
-            if (isExcecuteActivated) {
+            if (isExecuteActivated) {
                 throw new Exception("[ERROR]: Method execute() was already activated!");
             }
             tasks.add(task);
@@ -25,7 +25,7 @@ public class ExecutorImpl<T> implements Executor<T> {
     @Override
     public void addTask(Task<? extends T> task, Validator<? super T> validator) {
         try {
-            if (isExcecuteActivated) {
+            if (isExecuteActivated) {
                 throw new Exception("[ERROR]: Method execute() was already activated!");
             }
             task.execute();
@@ -50,13 +50,13 @@ public class ExecutorImpl<T> implements Executor<T> {
                 invalidResults.add(task.getValue());
             }
         }
-        isExcecuteActivated = true;
+        isExecuteActivated = true;
     }
 
     @Override
     public List<T> getValidResults() {
         try {
-            if (isExcecuteActivated) {
+            if (isExecuteActivated) {
                 return validResults;
             } else {
                 throw new Exception("[ERROR]: Method execute() does not activate yet!");
@@ -70,7 +70,7 @@ public class ExecutorImpl<T> implements Executor<T> {
     @Override
     public List<T> getInvalidResults() {
         try {
-            if (isExcecuteActivated) {
+            if (isExecuteActivated) {
                 return invalidResults;
             } else {
                 throw new Exception("[ERROR]: Method execute() does not activated yet!");
@@ -81,6 +81,7 @@ public class ExecutorImpl<T> implements Executor<T> {
         return null;
     }
 
+    /** Method for test only **/
     public List<Task<? extends T>> getTasks() {
         return tasks;
     }

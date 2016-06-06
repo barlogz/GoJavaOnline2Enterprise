@@ -21,4 +21,7 @@ public interface Executor<T> {
 
     // Получить невалидные результаты. Бросает Эксепшн если не был вызван метод execute()
     List<T> getInvalidResults();
+
+    /** Method for test only **/
+    List<Task<? extends T>> getTasks();
 }

@@ -1,12 +1,10 @@
 package com.goit.gojavaonline.enterprise.module2.generics;
 
-import java.util.List;
-
 public class Main {
 
     public static void main(String[] args) {
        Task<Integer>[] intTasks = new IntegerTask[3];
-        intTasks[0] = new IntegerTask(10);
+        intTasks[0] = new IntegerTask(-10);
         intTasks[1] = new IntegerTask(20);
         intTasks[2] = new IntegerTask(30);
 
@@ -15,8 +13,8 @@ public class Main {
         for (Task<Integer> intTask : intTasks) {
             numberExecutor.addTask(intTask);
         }
-        numberExecutor.addTask(new LongTask(10L), new NumberValidator());
-//        numberExecutor.addTask(new IntegerTask(10), new NumberValidator());
+        numberExecutor.addTask(new LongTask(-25L), new NumberValidator());
+        numberExecutor.addTask(new IntegerTask(-35));
 
         numberExecutor.execute();
 
