@@ -1,3 +1,5 @@
+package com.goit.gojavaonline.enterprise.module2.generics;
+
 import com.goit.gojavaonline.enterprise.module2.generics.*;
 import org.junit.Test;
 
